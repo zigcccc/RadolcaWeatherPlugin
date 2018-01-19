@@ -1,4 +1,6 @@
 const path = require('path')
+const Minify = require('babel-minify-webpack-plugin')
+
 
 module.exports = {
   entry: "./app.js",
@@ -6,12 +8,17 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "weather.dist.js"
   },
-  rules: [
-    {
-      loader: "babel-loader",
-      options: {
-        preset: ["es2015"]
+  plugins: [
+    new Minify()
+  ],
+  module: {
+    rules: [
+      {
+        loader: "babel-loader",
+        options: {
+          presets: ["es2015"]
+        }
       }
-    }
-  ]
+    ]
+  }
 }
