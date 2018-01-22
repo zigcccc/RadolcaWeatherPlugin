@@ -1,7 +1,7 @@
 #current-weather
   .current-temperature
     display: flex
-    flex-direction: row-reverse
+    flex-direction: row
     justify-content: center
     align-items: center
 
@@ -24,3 +24,12 @@
         margin-top: 15px
         font-size: 32px
         line-height: 1
+
+    .min-max-temp
+      .min-temp,
+      .max-temp
+        display: flex
+        & > span
+          font-size: 10px
+          margin-top: 3px
+          margin-left: 3px

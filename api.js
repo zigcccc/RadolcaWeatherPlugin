@@ -9,12 +9,12 @@ export default class API {
   }
 
   currentWeather(){
-    return `${this.api_base}weather?lat=${this.lat}&lon=${this.lon}&appid=${this.appID}`
+    return `${this.api_base}weather?lat=${this.lat}&lon=${this.lon}&appid=${this.appID}&lang=sl`
     
   }
 
   forecast(){
-    return `${this.api_base}forecast?lat=${this.lat}&lon=${this.lon}&appid=${this.appID}`
+    return `${this.api_base}forecast?lat=${this.lat}&lon=${this.lon}&appid=${this.appID}&lang=sl`
   }
 
   getIconUrl(icon){

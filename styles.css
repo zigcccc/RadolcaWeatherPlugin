@@ -1,6 +1,6 @@
 #current-weather .current-temperature {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: center;
   align-items: center; }
   #current-weather .current-temperature > * {
@@ -20,5 +20,13 @@
       margin-top: 15px;
       font-size: 32px;
       line-height: 1; }
+  #current-weather .current-temperature .min-max-temp .min-temp,
+  #current-weather .current-temperature .min-max-temp .max-temp {
+    display: flex; }
+    #current-weather .current-temperature .min-max-temp .min-temp > span,
+    #current-weather .current-temperature .min-max-temp .max-temp > span {
+      font-size: 10px;
+      margin-top: 3px;
+      margin-left: 3px; }
 
 /*# sourceMappingURL=styles.css.map */

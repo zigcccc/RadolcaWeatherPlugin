@@ -60,7 +60,11 @@ class CurrentWeather extends React.Component {
               ? 
                 <CurrentTemperature
                   icon={this.state.api.getIconUrl(this.state.weatherDescription.icon)}
-                  temp={this.kelvinToCelsius(this.state.weatherDetails.temp)}
+                  temp={{
+                    current: this.kelvinToCelsius(this.state.weatherDetails.temp),
+                    min: this.kelvinToCelsius(this.state.weatherDetails.temp_min),
+                    max: this.kelvinToCelsius(this.state.weatherDetails.temp_max)
+                  }}
                 />
               : null
             }
