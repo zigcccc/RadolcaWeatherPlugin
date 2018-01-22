@@ -1,0 +1,24 @@
+#current-weather .current-temperature {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center; }
+  #current-weather .current-temperature > * {
+    margin: 0 0.5em; }
+  #current-weather .current-temperature > img {
+    width: 50px;
+    height: 50px; }
+  #current-weather .current-temperature .temp {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start; }
+    #current-weather .current-temperature .temp .num {
+      font-size: 128px;
+      font-weight: 700;
+      line-height: 1; }
+    #current-weather .current-temperature .temp .symbol {
+      margin-top: 15px;
+      font-size: 32px;
+      line-height: 1; }
+
+/*# sourceMappingURL=styles.css.map */
