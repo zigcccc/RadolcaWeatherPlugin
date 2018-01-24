@@ -1,6 +1,8 @@
 import axios from 'axios'
 import API from '../../api'
 
+import WeatherForecastCard from './weatherForecastCard'
+
 class WeatherForecast extends React.Component {
   constructor(props){
     super(props)
@@ -9,7 +11,10 @@ class WeatherForecast extends React.Component {
       isLoading: true,
       hasErrors: false,
       errMsg: null,
-      forecastData: null
+      forecastData: null,
+      days: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
+      today: new Date().getDay(),
+      forecast: {}
     }
   }
   getWeatherForecast(){
@@ -31,6 +36,15 @@ class WeatherForecast extends React.Component {
         }
       })
   }
+  getDayAndHour(dateStr){
+    let date = new Date(dateStr)
+    let day = this.state.days[date.getDay()]
+    let hours = date.getHours()
+    return {
+      day: day,
+      hour: hours
+    }
+  }
   kelvinToCelsius(t){
     return Math.floor(t - 273.15)
   }
@@ -42,7 +56,18 @@ class WeatherForecast extends React.Component {
       return(
         <div className="weather-forecast">
           {this.state.forecastData.list.map((forecast, i) => {
-            return <p key={i}>{this.kelvinToCelsius(forecast.main.temp)}°C</p>
+            if (i > 0 && this.getDayAndHour(forecast.dt_txt).day !== this.getDayAndHour(this.state.forecastData.list[i - 1].dt_txt).day) {
+              return (
+                <WeatherForecastCard 
+                  key={i}
+                  temp={this.kelvinToCelsius(this.state.forecastData.list[i + 4].main.temp)}
+                  day={this.getDayAndHour(this.state.forecastData.list[i + 4].dt_txt).day}
+                />
+              )
+            }
+            else {
+              return false
+            }
           })}
         </div>
       )
