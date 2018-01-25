@@ -8,6 +8,7 @@ class WeatherForecast extends React.Component {
     super(props)
     this.state = {
       api: this.props.api,
+      dataLayer: window.dataLayer || [],
       isLoading: true,
       hasErrors: false,
       errMsg: null,
@@ -37,6 +38,12 @@ class WeatherForecast extends React.Component {
       })
       .then(forecast => {
         this.generateForecastArray(forecast)
+      })
+      .catch(err => {
+        dataLayer.push({
+          event: 'WeatherError',
+          error: err
+        })
       })
   }
   getDayAndHour(dateStr){

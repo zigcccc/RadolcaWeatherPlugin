@@ -42,6 +42,10 @@ class CurrentWeather extends React.Component {
         }
       })
       .catch(err => {
+        dataLayer.push({
+          event: 'WeatherError',
+          error: err
+        })
         this.setState({
           ...this.state,
           hasError: true,
