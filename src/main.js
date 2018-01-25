@@ -6,19 +6,28 @@ class Main extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      api: new API(46.4845, 13.7857)
+      api: null,
+      lang: null
     }
+  }
+  componentWillMount(){
+    this.setState({
+      ...this.state,
+      api: new API(46.4845, 13.7857, window.location.pathname.indexOf('/sl/') === -1 ? 'en' : 'sl'),
+      lang: window.location.pathname.indexOf('/sl/') === -1 ? 'en' : 'sl'
+    })
   }
   render(){
     return(
       <div className="container">
-        <h1 className="title">Vreme v Kranjski gori</h1>
-        <CurrentWeatherContainer api={this.state.api} data={{lon: 46.4845, lat: 13.7857}} />
-        <hr/>
+        <CurrentWeatherContainer api={this.state.api} lang={this.state.lang} />
         <br/>
-        <h2 className="subtitle">Vremenska napoved:</h2>
-        <WeatherForecast api={this.state.api} />
-        <hr/>
+        <h2 id="forecast-title" className="subtitle">{
+          this.state.lang === 'sl'
+          ? 'Vreme v prihodnjih dneh:'
+          : 'Weather forecast:'  
+        }</h2>
+        <WeatherForecast api={this.state.api} lang={this.state.lang} />
       </div>
     )
   }

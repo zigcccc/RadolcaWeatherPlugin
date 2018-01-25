@@ -1,35 +1,143 @@
+*
+  font-family: 'Open Sans', sans-serif
+
+body
+  padding: 2em 0
+
+#forecast-title
+  padding-left: 20px
+  font-weight: 700
+
 #current-weather
-  .current-temperature
+  .current-weather-container
     display: flex
-    flex-direction: row
-    justify-content: center
+    flex-direction: column
     align-items: center
-
-    & > *
-      margin: 0 0.5em
-
+    .divider
+      width: 200px
     & > img
-      width: 50px
-      height: 50px
-
-    .temp
+      width: 250px
+      height: auto
+      margin-bottom: 1em
+    .current-temperature
       display: flex
       flex-direction: row
-      align-content: flex-start
-      .num
-        font-size: 128px
-        font-weight: 700
-        line-height: 1
-      .symbol
-        margin-top: 15px
-        font-size: 32px
-        line-height: 1
+      justify-content: center
+      align-items: center
 
-    .min-max-temp
-      .min-temp,
-      .max-temp
+      & > *
+        margin: 0 0.5em
+
+      .temp
         display: flex
-        & > span
-          font-size: 10px
-          margin-top: 3px
-          margin-left: 3px
+        flex-direction: row
+        align-content: flex-start
+        .num
+          font-size: 128px
+          font-weight: 700
+          line-height: 1
+        .symbol
+          margin-top: 15px
+          font-size: 32px
+          line-height: 1
+
+      .min-max-temp
+        .min-temp,
+        .max-temp
+          display: flex
+          & > span
+            font-size: 10px
+            margin-top: 3px
+            margin-left: 3px
+
+    .extra-data-container
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-top: 1em
+      & > hr
+        width: 30px
+      .extra-data
+        display: flex
+        flex-direction: column
+        align-items: center
+        margin: 0 2em
+        & > img
+          height: 45px
+          width: auto
+          margin-bottom: 10px
+        & > small
+          text-transform: uppercase
+          font-size: 0.65em
+
+.weather-forecast
+  display: flex
+  width: 100%
+  justify-content: space-around
+  @media screen and (max-width: 768px)
+    flex-wrap: wrap
+    justify-content: center
+  .forecast-card
+    display: flex
+    flex: 1
+    margin: 0 1em
+    flex-direction: column
+    align-items: center
+    border: 1px solid #eeeeee
+    padding: 0.75em 1em
+    border-radius: 10px
+    box-shadow: 0 10px 20px rgba(0,0,0,.10)
+    @media screen and (max-width: 850px)
+      margin: 0 0.75em
+    //background: #fbfbfb
+    @media screen and (max-width: 768px)
+      width: 95%
+      flex: 0 0 95%
+      margin: 0.5em 0
+    
+    .subtitle
+      text-transform: uppercase
+      font-weight: 700
+      font-size: 12px
+      margin-bottom: 0
+
+    & > img
+      margin: 0.5em
+      padding: 0 0.5em
+      width: 100%
+      max-width: 150px
+      height: auto
+
+    h4.temp
+      font-size: 36px
+      font-weight: bold
+      display: flex
+      line-height: 1
+      & > small
+        font-size: 14px
+        margin-top: 5px
+
+    & > hr
+      margin: 5px 0
+      width: 100%
+
+    p
+      margin-bottom: 0.5em
+      margin-top: 5px
+      font-size: 12px
+
+    .extra-forecast-data
+      display: flex
+      justify-content: space-around
+      width: 100%
+      font-size: 14px
+      margin-top: 8px
+
+      .extra-forecast-data-single
+        display: flex
+        flex-direction: column
+        align-items: center
+        & > img
+          height: 25px
+          width: auto
+          margin-bottom: 3px

@@ -12,7 +12,8 @@ class CurrentWeather extends React.Component {
       hasError: false,
       errMsg: null,
       weatherDescription: null,
-      weatherDetails: null
+      weatherDetails: null,
+      weatherExtraData: null
     }
   }
 
@@ -31,8 +32,13 @@ class CurrentWeather extends React.Component {
             hasError: false,
             isLoading: false,
             weatherDescription: data.data.weather[0],
-            weatherDetails: data.data.main
-          }, () => console.log(this.state))
+            weatherDetails: data.data.main,
+            weatherExtraData: {
+              humidity: data.data.main.humidity,
+              windSpeed: data.data.wind.speed,
+              clouds: data.data.clouds.all
+            }
+          })
         }
       })
       .catch(err => {
@@ -59,12 +65,15 @@ class CurrentWeather extends React.Component {
             {this.state.weatherDescription && this.state.weatherDetails && this.state.hasError === false
               ? 
                 <CurrentTemperature
+                  lang={this.props.lang}
                   icon={this.state.api.getIconUrl(this.state.weatherDescription.icon)}
+                  desc={this.state.weatherDescription.description}
                   temp={{
                     current: this.kelvinToCelsius(this.state.weatherDetails.temp),
                     min: this.kelvinToCelsius(this.state.weatherDetails.temp_min),
                     max: this.kelvinToCelsius(this.state.weatherDetails.temp_max)
                   }}
+                  extra={this.state.weatherExtraData}
                 />
               : null
             }

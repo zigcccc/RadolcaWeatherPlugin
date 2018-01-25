@@ -1,32 +1,135 @@
-#current-weather .current-temperature {
+* {
+  font-family: "Open Sans", sans-serif; }
+
+body {
+  padding: 2em 0; }
+
+#forecast-title {
+  padding-left: 20px;
+  font-weight: 700; }
+
+#current-weather .current-weather-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-items: center; }
-  #current-weather .current-temperature > * {
-    margin: 0 0.5em; }
-  #current-weather .current-temperature > img {
-    width: 50px;
-    height: 50px; }
-  #current-weather .current-temperature .temp {
+  #current-weather .current-weather-container .divider {
+    width: 200px; }
+  #current-weather .current-weather-container > img {
+    width: 250px;
+    height: auto;
+    margin-bottom: 1em; }
+  #current-weather .current-weather-container .current-temperature {
     display: flex;
     flex-direction: row;
-    align-content: flex-start; }
-    #current-weather .current-temperature .temp .num {
-      font-size: 128px;
+    justify-content: center;
+    align-items: center; }
+    #current-weather .current-weather-container .current-temperature > * {
+      margin: 0 0.5em; }
+    #current-weather .current-weather-container .current-temperature .temp {
+      display: flex;
+      flex-direction: row;
+      align-content: flex-start; }
+      #current-weather .current-weather-container .current-temperature .temp .num {
+        font-size: 128px;
+        font-weight: 700;
+        line-height: 1; }
+      #current-weather .current-weather-container .current-temperature .temp .symbol {
+        margin-top: 15px;
+        font-size: 32px;
+        line-height: 1; }
+    #current-weather .current-weather-container .current-temperature .min-max-temp .min-temp,
+    #current-weather .current-weather-container .current-temperature .min-max-temp .max-temp {
+      display: flex; }
+      #current-weather .current-weather-container .current-temperature .min-max-temp .min-temp > span,
+      #current-weather .current-weather-container .current-temperature .min-max-temp .max-temp > span {
+        font-size: 10px;
+        margin-top: 3px;
+        margin-left: 3px; }
+  #current-weather .current-weather-container .extra-data-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em; }
+    #current-weather .current-weather-container .extra-data-container > hr {
+      width: 30px; }
+    #current-weather .current-weather-container .extra-data-container .extra-data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 2em; }
+      #current-weather .current-weather-container .extra-data-container .extra-data > img {
+        height: 45px;
+        width: auto;
+        margin-bottom: 10px; }
+      #current-weather .current-weather-container .extra-data-container .extra-data > small {
+        text-transform: uppercase;
+        font-size: 0.65em; }
+
+.weather-forecast {
+  display: flex;
+  width: 100%;
+  justify-content: space-around; }
+  @media screen and (max-width: 768px) {
+    .weather-forecast {
+      flex-wrap: wrap;
+      justify-content: center; } }
+  .weather-forecast .forecast-card {
+    display: flex;
+    flex: 1;
+    margin: 0 1em;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #eeeeee;
+    padding: 0.75em 1em;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+    @media screen and (max-width: 850px) {
+      .weather-forecast .forecast-card {
+        margin: 0 0.75em; } }
+    @media screen and (max-width: 768px) {
+      .weather-forecast .forecast-card {
+        width: 95%;
+        flex: 0 0 95%;
+        margin: 0.5em 0; } }
+    .weather-forecast .forecast-card .subtitle {
+      text-transform: uppercase;
       font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 0; }
+    .weather-forecast .forecast-card > img {
+      margin: 0.5em;
+      padding: 0 0.5em;
+      width: 100%;
+      max-width: 150px;
+      height: auto; }
+    .weather-forecast .forecast-card h4.temp {
+      font-size: 36px;
+      font-weight: bold;
+      display: flex;
       line-height: 1; }
-    #current-weather .current-temperature .temp .symbol {
-      margin-top: 15px;
-      font-size: 32px;
-      line-height: 1; }
-  #current-weather .current-temperature .min-max-temp .min-temp,
-  #current-weather .current-temperature .min-max-temp .max-temp {
-    display: flex; }
-    #current-weather .current-temperature .min-max-temp .min-temp > span,
-    #current-weather .current-temperature .min-max-temp .max-temp > span {
-      font-size: 10px;
-      margin-top: 3px;
-      margin-left: 3px; }
+      .weather-forecast .forecast-card h4.temp > small {
+        font-size: 14px;
+        margin-top: 5px; }
+    .weather-forecast .forecast-card > hr {
+      margin: 5px 0;
+      width: 100%; }
+    .weather-forecast .forecast-card p {
+      margin-bottom: 0.5em;
+      margin-top: 5px;
+      font-size: 12px; }
+    .weather-forecast .forecast-card .extra-forecast-data {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      font-size: 14px;
+      margin-top: 8px; }
+      .weather-forecast .forecast-card .extra-forecast-data .extra-forecast-data-single {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        .weather-forecast .forecast-card .extra-forecast-data .extra-forecast-data-single > img {
+          height: 25px;
+          width: auto;
+          margin-bottom: 3px; }
 
 /*# sourceMappingURL=styles.css.map */

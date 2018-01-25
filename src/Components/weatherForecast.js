@@ -12,9 +12,8 @@ class WeatherForecast extends React.Component {
       hasErrors: false,
       errMsg: null,
       forecastData: null,
-      days: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
-      today: new Date().getDay(),
-      forecast: {}
+      days: this.props.lang === 'sl' ? ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'] : ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+      forecast: null
     }
   }
   getWeatherForecast(){
@@ -32,8 +31,12 @@ class WeatherForecast extends React.Component {
             isLoading: false,
             hasErrors: false,
             forecastData: data.data
-          }, () => console.log(this.state))
+          })
         }
+        return data.data.list
+      })
+      .then(forecast => {
+        this.generateForecastArray(forecast)
       })
   }
   getDayAndHour(dateStr){
@@ -45,6 +48,32 @@ class WeatherForecast extends React.Component {
       hour: hours
     }
   }
+  generateForecastArray(forecasts){
+    let forecastObj = {}
+    for (let forecast of forecasts) {
+      let day = this.getDayAndHour(forecast.dt_txt).day
+      let hour = this.getDayAndHour(forecast.dt_txt).hour
+      let temp = this.kelvinToCelsius(forecast.main.temp)
+      let icon = forecast.weather[0].icon
+      let weatherDesc = forecast.weather[0].description
+      let wind = forecast.wind.speed
+      let clouds = forecast.clouds.all
+      if(!forecastObj.hasOwnProperty(day) && hour === 12){
+        forecastObj[day] = {
+          hour,
+          temp,
+          icon,
+          desc: weatherDesc,
+          wind,
+          clouds
+        }
+      }
+    }
+    this.setState({
+      ...this.state,
+      forecast: forecastObj
+    })
+  }
   kelvinToCelsius(t){
     return Math.floor(t - 273.15)
   }
@@ -52,22 +81,22 @@ class WeatherForecast extends React.Component {
     this.getWeatherForecast()
   }
   render(){
-    if (this.state.forecastData) {
+    if (this.state.forecast) {
+      let keys = Object.keys(this.state.forecast)
+      let values = Object.values(this.state.forecast)
       return(
         <div className="weather-forecast">
-          {this.state.forecastData.list.map((forecast, i) => {
-            if (i > 0 && this.getDayAndHour(forecast.dt_txt).day !== this.getDayAndHour(this.state.forecastData.list[i - 1].dt_txt).day) {
-              return (
-                <WeatherForecastCard 
-                  key={i}
-                  temp={this.kelvinToCelsius(this.state.forecastData.list[i + 4].main.temp)}
-                  day={this.getDayAndHour(this.state.forecastData.list[i + 4].dt_txt).day}
-                />
-              )
-            }
-            else {
-              return false
-            }
+          {values.map((forecast, i) => {
+            return (
+              <WeatherForecastCard 
+                key={i}
+                temp={forecast.temp}
+                day={keys[i]}
+                icon={this.state.api.getIconUrl(forecast.icon)}
+                description={forecast.desc}
+                extra={{wind: forecast.wind, clouds: forecast.clouds}}
+              />
+            )
           })}
         </div>
       )
