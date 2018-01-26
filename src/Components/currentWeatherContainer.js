@@ -2,6 +2,7 @@ import axios from 'axios'
 import API from '../../api'
 
 import CurrentTemperature from './currentTemperature'
+import LoadingCurrentWeather from './loadingCurrentWeather'
 
 class CurrentWeather extends React.Component {
   constructor(props){
@@ -27,18 +28,20 @@ class CurrentWeather extends React.Component {
           })
         }
         else {
-          this.setState({
-            ...this.state,
-            hasError: false,
-            isLoading: false,
-            weatherDescription: data.data.weather[0],
-            weatherDetails: data.data.main,
-            weatherExtraData: {
-              humidity: data.data.main.humidity,
-              windSpeed: data.data.wind.speed,
-              clouds: data.data.clouds.all
-            }
-          })
+          setTimeout(() => {
+            this.setState({
+              ...this.state,
+              hasError: false,
+              isLoading: false,
+              weatherDescription: data.data.weather[0],
+              weatherDetails: data.data.main,
+              weatherExtraData: {
+                humidity: data.data.main.humidity,
+                windSpeed: data.data.wind.speed,
+                clouds: data.data.clouds.all
+              }
+            })
+          }, 1000)
         }
       })
       .catch(err => {
@@ -66,7 +69,7 @@ class CurrentWeather extends React.Component {
       <div className="current-weather">
         <div className="content">
           <div id="current-weather">
-            {this.state.weatherDescription && this.state.weatherDetails && this.state.hasError === false
+            {!this.state.isLoading
               ? 
                 <CurrentTemperature
                   lang={this.props.lang}
@@ -79,7 +82,7 @@ class CurrentWeather extends React.Component {
                   }}
                   extra={this.state.weatherExtraData}
                 />
-              : null
+              : <LoadingCurrentWeather lang={this.props.lang} />
             }
           </div>
         </div>
