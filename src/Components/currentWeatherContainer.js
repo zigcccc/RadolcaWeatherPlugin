@@ -37,20 +37,18 @@ class CurrentWeather extends React.Component {
         throw data.statusText
       }
       else {
-        setTimeout(() => {
-          this.setState({
-            ...this.state,
-            hasError: false,
-            isLoading: false,
-            weatherDescription: data.data.weather[0],
-            weatherDetails: data.data.main,
-            weatherExtraData: {
-              humidity: data.data.main.humidity,
-              windSpeed: data.data.wind.speed,
-              clouds: data.data.clouds.all
-            }
-          })
-        })
+        this.setState({
+          ...this.state,
+          hasError: false,
+          isLoading: false,
+          weatherDescription: data.data.weather[0],
+          weatherDetails: data.data.main,
+          weatherExtraData: {
+            humidity: data.data.main.humidity,
+            windSpeed: data.data.wind.speed,
+            clouds: data.data.clouds.all
+          }
+        })      
       }
     })
     .catch(err => {
