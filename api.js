@@ -1,7 +1,7 @@
 export default class API {
   constructor(lat, lon, lang){
     this.api_base = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/",
-    this.appID = 'a3f0075817792f8b87e1d24b9fa314f3',
+    this.appID =  'a3f0075817792f8b87e1d24b9fa314f3',
     this.lat = lat,
     this.lon = lon,
     this.lang = lang,

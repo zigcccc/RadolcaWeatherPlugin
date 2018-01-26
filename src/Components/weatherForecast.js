@@ -2,37 +2,38 @@ import axios from 'axios'
 import API from '../../api'
 
 import WeatherForecastCard from './weatherForecastCard'
+import LoadingWheaterForecast from './loadingWheaterForecast'
+import ErrorComponent from './errorComponent'
 
 class WeatherForecast extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       api: this.props.api,
-      dataLayer: window.dataLayer || [],
       isLoading: true,
       hasErrors: false,
       errMsg: null,
-      forecastData: null,
       days: this.props.lang === 'sl' ? ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'] : ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
       forecast: null
     }
   }
   getWeatherForecast(){
+    this.setState({
+      ...this.state,
+      hasErrors: false,
+      isLoading: true,
+      errMsg: null
+    })
     axios.get(this.state.api.forecast())
       .then(data => {
         if (data.status !== 200) {
           this.setState({
             ...this.state,
-            hasErrors: true
+            isLoading: true,
+            hasErrors: true,
+            errMsg: data.statusText
           })
-        }
-        else {
-          this.setState({
-            ...this.state,
-            isLoading: false,
-            hasErrors: false,
-            forecastData: data.data
-          })
+          throw data.statusText
         }
         return data.data.list
       })
@@ -40,6 +41,11 @@ class WeatherForecast extends React.Component {
         this.generateForecastArray(forecast)
       })
       .catch(err => {
+        this.setState({
+          ...this.state,
+          hasErrors: true,
+          errMsg: err
+        })
         dataLayer.push({
           event: 'WeatherError',
           error: err
@@ -78,6 +84,8 @@ class WeatherForecast extends React.Component {
     }
     this.setState({
       ...this.state,
+      isLoading: false,
+      hasErrors: false,
       forecast: forecastObj
     })
   }
@@ -88,29 +96,30 @@ class WeatherForecast extends React.Component {
     this.getWeatherForecast()
   }
   render(){
-    if (this.state.forecast) {
-      let keys = Object.keys(this.state.forecast)
-      let values = Object.values(this.state.forecast)
-      return(
-        <div className="weather-forecast">
-          {values.map((forecast, i) => {
-            return (
-              <WeatherForecastCard 
-                key={i}
-                temp={forecast.temp}
-                day={keys[i]}
-                icon={this.state.api.getIconUrl(forecast.icon)}
-                description={forecast.desc}
-                extra={{wind: forecast.wind, clouds: forecast.clouds}}
-              />
-            )
-          })}
-        </div>
-      )
+    if (this.state.hasErrors){
+      return <ErrorComponent lang={this.props.lang} refresh={this.getWeatherForecast.bind(this)} msg={this.state.errMsg.response.data.message} />
     }
-    else {
-      return null
+    if (this.state.isLoading) {
+      return <LoadingWheaterForecast lang={this.props.lang} />
     }
+    let keys = Object.keys(this.state.forecast)
+    let values = Object.values(this.state.forecast)
+    return (
+      <div className="weather-forecast">
+        {values.map((forecast, i) => {
+          return (
+            <WeatherForecastCard 
+              key={i}
+              temp={forecast.temp}
+              day={keys[i]}
+              icon={this.state.api.getIconUrl(forecast.icon)}
+              description={forecast.desc}
+              extra={{wind: forecast.wind, clouds: forecast.clouds}}
+            />
+          )
+        })}
+      </div>
+    )
   }
 }
 

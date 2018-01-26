@@ -11,7 +11,8 @@
   #current-weather .current-weather-container > img {
     width: 250px;
     height: auto;
-    margin-bottom: 1em; }
+    margin-bottom: 1em;
+    min-height: 100px; }
   #current-weather .current-weather-container .current-temperature {
     display: flex;
     flex-direction: row;
@@ -124,5 +125,32 @@
           height: 25px;
           width: auto;
           margin-bottom: 3px; }
+
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .error-message > img {
+    max-width: 250px;
+    height: auto;
+    margin-bottom: 1em; }
+  .error-message > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .error-message > div .error-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700; }
+    .error-message > div .error-text {
+      font-size: 14px;
+      text-align: center; }
+    .error-message > div .error-btn {
+      border: none;
+      outline: none;
+      display: block;
+      margin-top: 1em;
+      font-size: 16px;
+      font-weight: 700; }
 
 /*# sourceMappingURL=styles.css.map */

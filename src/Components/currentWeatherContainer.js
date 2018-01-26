@@ -3,6 +3,7 @@ import API from '../../api'
 
 import CurrentTemperature from './currentTemperature'
 import LoadingCurrentWeather from './loadingCurrentWeather'
+import ErrorComponent from './errorComponent'
 
 class CurrentWeather extends React.Component {
   constructor(props){
@@ -19,42 +20,50 @@ class CurrentWeather extends React.Component {
   }
 
   getCurrentWeather(){
+    this.setState({
+      ...this.state,
+      hasError: false,
+      isLoading: true,
+      errMsg: null
+    })
     axios.get(this.state.api.currentWeather())
-      .then(data => {
-        if (data.status !== 200) {
-          this.setState({
-            ...this.state,
-            hasError: true
-          })
-        }
-        else {
-          setTimeout(() => {
-            this.setState({
-              ...this.state,
-              hasError: false,
-              isLoading: false,
-              weatherDescription: data.data.weather[0],
-              weatherDetails: data.data.main,
-              weatherExtraData: {
-                humidity: data.data.main.humidity,
-                windSpeed: data.data.wind.speed,
-                clouds: data.data.clouds.all
-              }
-            })
-          }, 1000)
-        }
-      })
-      .catch(err => {
-        dataLayer.push({
-          event: 'WeatherError',
-          error: err
-        })
+    .then(data => {
+      if (data.status !== 200) {
         this.setState({
           ...this.state,
           hasError: true,
-          errMsg: err
+          errMsg: data.statusText
         })
+        throw data.statusText
+      }
+      else {
+        setTimeout(() => {
+          this.setState({
+            ...this.state,
+            hasError: false,
+            isLoading: false,
+            weatherDescription: data.data.weather[0],
+            weatherDetails: data.data.main,
+            weatherExtraData: {
+              humidity: data.data.main.humidity,
+              windSpeed: data.data.wind.speed,
+              clouds: data.data.clouds.all
+            }
+          })
+        })
+      }
+    })
+    .catch(err => {
+      this.setState({
+        ...this.state,
+        hasError: true,
+        errMsg: err
       })
+      dataLayer.push({
+        event: 'WeatherError',
+        error: err
+      })
+    })
   }
 
   kelvinToCelsius(t){
@@ -65,6 +74,9 @@ class CurrentWeather extends React.Component {
     this.getCurrentWeather()
   }
   render(){
+    if (this.state.hasError) {
+      return <ErrorComponent refresh={this.getCurrentWeather.bind(this)} lang={this.props.lang} msg={this.state.errMsg.response.data.message} />
+    }
     return(
       <div className="current-weather">
         <div className="content">
