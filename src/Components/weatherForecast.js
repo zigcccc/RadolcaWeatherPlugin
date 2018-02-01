@@ -53,6 +53,7 @@ class WeatherForecast extends React.Component {
       })
   }
   getDayAndHour(dateStr){
+    dateStr = dateStr.replace(/-/g, '/')
     let date = new Date(dateStr)
     let day = this.state.days[date.getDay()]
     let hours = date.getHours()
@@ -71,7 +72,7 @@ class WeatherForecast extends React.Component {
       let weatherDesc = forecast.weather[0].description
       let wind = forecast.wind.speed
       let clouds = forecast.clouds.all
-      if(!forecastObj.hasOwnProperty(day) && hour === 12){
+      if(hour === 12){
         forecastObj[day] = {
           hour,
           temp,

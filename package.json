@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "datejs": "^1.0.0-rc3",
     "html-webpack-plugin": "^2.30.1",
     "path": "^0.12.7",
     "react": "^16.2.0",
