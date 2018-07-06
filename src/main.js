@@ -14,8 +14,8 @@ class Main extends React.Component {
 		this.setState({
 			...this.state,
 			api: new API(
-				46.4845,
-				13.7857,
+				46.3417,
+				14.1781,
 				window.location.pathname.indexOf('/sl/') === -1 ? 'en' : 'sl'
 			),
 			lang: window.location.pathname.indexOf('/sl/') === -1 ? 'en' : 'sl'
